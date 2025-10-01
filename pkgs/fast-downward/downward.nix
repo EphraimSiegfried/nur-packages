@@ -34,10 +34,10 @@ stdenv.mkDerivation {
   # Set soplex_DIR and cplex_DIR for the build process if they are present
   env =
     (lib.optionalAttrs withSoplex {
-      soplex_DIR = "${lib.getExe pkgs.soplex}";
+      soplex_DIR = "${pkgs.soplex}";
     })
     // (lib.optionalAttrs withCplex {
-      cplex_DIR = "${lib.getExe pkgs.cplex}";
+      cplex_DIR = "${pkgs.cplex}";
     });
 
   installPhase = ''
@@ -48,7 +48,7 @@ stdenv.mkDerivation {
   # Make soplex_DIR and cplex_DIR available at runtime if they are present
   postInstall = ''
     wrapProgram $out/lib/downward \
-    	    ${lib.optionalString withSoplex "--set soplex_DIR ${lib.getExe pkgs.soplex}"} \
-    	    ${lib.optionalString withCplex "--set cplex_DIR ${lib.getExe pkgs.cplex}"} \
+    	    ${lib.optionalString withSoplex "--set soplex_DIR ${pkgs.soplex}"} \
+    	    ${lib.optionalString withCplex "--set cplex_DIR ${pkgs.cplex}"} \
   '';
 }
