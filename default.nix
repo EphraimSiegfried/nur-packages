@@ -18,6 +18,7 @@
 
   example-package = pkgs.callPackage ./pkgs/example-package { };
   fast-downward = pkgs.callPackage ./pkgs/fast-downward { };
+  sketchybar-system-stats = pkgs.callPackage ./pkgs/sketchybar-system-stats { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
