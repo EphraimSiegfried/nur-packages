@@ -6,18 +6,19 @@
   pkg-config,
   cli11,
   ninja,
+  git,
 }:
 let
   pname = "lv95-converter";
 in
 stdenv.mkDerivation {
   name = pname;
-  version = "1.1.2";
+  version = "v1.1.2-git";
   src = fetchFromGitHub {
     owner = "tifrueh";
     repo = pname;
-    rev = "b62906a";
-    sha256 = "sha256-/srXVPVMqHvJzsAnmI7znVqHQ2rFFPPeV+NgNWMbVn0=";
+    rev = "f4d06";
+    sha256 = "sha256-Bpi/GQFY/HpkrEOTxHb0cUIxEk0WWmjfuIeCkz9Oce8=";
   };
   nativeBuildInputs = [
     meson
@@ -25,5 +26,6 @@ stdenv.mkDerivation {
     pkg-config
     cli11
     ninja
+    git
   ];
 }
