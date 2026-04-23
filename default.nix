@@ -9,7 +9,11 @@
 {
   pkgs ? import <nixpkgs> { },
 }:
-
+let
+  iso639-lang = pkgs.callPackage ./pkgs/iso639-lang { };
+  slskd-api = pkgs.callPackage ./pkgs/slskd-api { };
+  ez_setup = pkgs.callPackage ./pkgs/ez_setup { };
+in
 {
   # The `lib`, `modules`, and `overlays` names are special
   lib = import ./lib { inherit pkgs; }; # functions
@@ -20,6 +24,9 @@
   fast-downward = pkgs.callPackage ./pkgs/fast-downward { };
   sketchybar-system-stats = pkgs.callPackage ./pkgs/sketchybar-system-stats { };
   lv95-converter = pkgs.callPackage ./pkgs/lv95-converter { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
+  inherit iso639-lang slskd-api ez_setup;
+
+  lazylibrarian = pkgs.callPackage ./pkgs/lazylibrarian {
+    inherit iso639-lang slskd-api ez_setup;
+  };
 }
