@@ -54,6 +54,21 @@ python3.pkgs.buildPythonApplication rec {
   # covered by beautifulsoup4
   pythonRemoveDeps = [ "bs4" ];
 
+  postInstall = ''
+    share=$out/share/lazy-librarian
+    mkdir -p "$share"
+    cp -r . "$share"
+
+    # Prevent LazyLibrarian from attempting a self-update on first run.
+    # It looks for a VERSION file to determine install type; "win32" skips
+    # the git-based update path entirely.
+    echo "win32" > "$share/VERSION"
+
+    makeWrapper ${python3.interpreter} $out/bin/lazy-librarian \
+      --add-flags "$share/LazyLibrarian.py" \
+      --set PYTHONPATH "$PYTHONPATH"
+  '';
+
   meta = {
     description = "LazyLibrarian is a SickBeard, CouchPotato, Headphones-like application for ebooks, audiobooks and magazines";
     homepage = "https://gitlab.com/LazyLibrarian/LazyLibrarian";
