@@ -8,7 +8,7 @@
 }:
 
 python3.pkgs.buildPythonApplication rec {
-  pname = "lazy-librarian";
+  pname = "lazylibrarian";
   version = "unstable-2026-04-20";
   pyproject = true;
 
@@ -55,7 +55,7 @@ python3.pkgs.buildPythonApplication rec {
   pythonRemoveDeps = [ "bs4" ];
 
   postInstall = ''
-    share=$out/share/lazy-librarian
+    share=$out/share/lazylibrarian
     mkdir -p "$share"
     cp -r . "$share"
 
@@ -64,7 +64,7 @@ python3.pkgs.buildPythonApplication rec {
     # the git-based update path entirely.
     echo "win32" > "$share/VERSION"
 
-    makeWrapper ${python3.interpreter} $out/bin/lazy-librarian \
+    makeWrapper ${python3.interpreter} $out/bin/lazylibrarian \
       --add-flags "$share/LazyLibrarian.py" \
       --set PYTHONPATH "$PYTHONPATH"
   '';
@@ -74,6 +74,6 @@ python3.pkgs.buildPythonApplication rec {
     homepage = "https://gitlab.com/LazyLibrarian/LazyLibrarian";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ ];
-    mainProgram = "lazy-librarian";
+    mainProgram = "lazylibrarian";
   };
 }
