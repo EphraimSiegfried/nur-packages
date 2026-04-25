@@ -47,6 +47,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    users.users.lazylibrarian = {
+      isSystemUser = true;
+      group = "lazylibrarian";
+      home = cfg.dataDir;
+      createHome = true;
+      description = "LazyLibrarian service user";
+    };
+
+    users.groups.lazylibrarian = { };
+
     systemd.services.lazylibrarian = {
       description = "LazyLibrarian ebook/audiobook manager";
       wantedBy = [ "multi-user.target" ];
@@ -66,18 +76,17 @@ in
       }";
 
       serviceConfig = {
-        DynamicUser = true;
+        User = "lazylibrarian";
+        Group = "lazylibrarian";
         StateDirectory = "lazylibrarian";
-
+        StateDirectoryMode = "0750";
         ReadWritePaths = [ cfg.dataDir ];
         PrivateTmp = true;
         ProtectSystem = "strict";
         ProtectHome = true;
-
         AmbientCapabilities = "";
         CapabilityBoundingSet = "";
         NoNewPrivileges = true;
-
         ProtectKernelTunables = true;
         ProtectKernelModules = true;
         ProtectKernelLogs = true;
@@ -89,15 +98,13 @@ in
         MemoryDenyWriteExecute = true;
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
-
         SystemCallFilter = [
           "@system-service"
           "~@privileged"
           "~@resources"
         ];
         SystemCallArchitectures = "native";
-
-        PrivateNetwork = false; # needs network access
+        PrivateNetwork = false;
         RestrictAddressFamilies = [
           "AF_INET"
           "AF_INET6"
