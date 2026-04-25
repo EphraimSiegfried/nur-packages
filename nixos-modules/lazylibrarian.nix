@@ -56,7 +56,11 @@ in
       script = "${cfg.package}/bin/lazylibrarian --datadir=${cfg.dataDir} --config=${
         fmt.generate "lazylibrarian-config.ini" (
           lib.recursiveUpdate {
-            general.http_port = cfg.port;
+            general = {
+              http_port = cfg.port;
+              install_type = "source";
+              auto_update = false;
+            };
           } cfg.settings
         )
       }";
