@@ -12,6 +12,7 @@
         ./flake-modules/packages.nix
         ./flake-modules/overlay.nix
         ./flake-modules/nixos-modules.nix
+        ./flake-modules/nixos-tests.nix
       ];
     };
 }
